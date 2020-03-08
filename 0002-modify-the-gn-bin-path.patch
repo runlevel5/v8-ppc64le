@@ -1,0 +1,24 @@
+From 32177d4e17219857fe051055dba215b1cae32876 Mon Sep 17 00:00:00 2001
+From: Trung LE <trung.le@ruby-journal.com>
+Date: Sun, 8 Mar 2020 08:17:42 +0000
+Subject: [PATCH] Modify the gn bin path
+
+---
+ gn.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gn.py b/gn.py
+index 43b18dd0..29df54e6 100755
+--- a/gn.py
++++ b/gn.py
+@@ -56,7 +56,7 @@ def main(args):
+
+   # Otherwise try the old .sha1 and download_from_google_storage locations
+   # inside of buildtools.
+-  bin_path = gclient_paths.GetBuildtoolsPlatformBinaryPath()
++  bin_path = '/gn/out'
+   if not bin_path:
+     print('gn.py: Could not find checkout in any parent of the current path.\n'
+           'This must be run inside a checkout.', file=sys.stderr)
+--
+2.17.1
