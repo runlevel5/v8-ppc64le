@@ -34,7 +34,7 @@ $ cd libv8
 $ mkdir -p vendor/v8/out.gn/libv8/obj
 $ cp /tmp/v8/obj/*.a vendor/v8/out.gn/libv8/obj/
 $ mv /tmp/v8/include vendor/v8/
-$ sed -i "s/VERSION.*/VERSION\ =\ \"7.3.495\"/g" lib/libv8/version.rb # update version to match the v8
+$ sed -i "s/VERSION.*/VERSION\ =\ \"7.3.495.0\"/g" lib/libv8/version.rb # update version to match the v8
 $ sed -i "s/task\ :binary\ =>.*/task\ :binary\ do/g" Rakefile # skip the :compile step
 $ bundle exec rake binary # the built gem is placed in pkg/libv8-7.3.495-powerpc64le-linux.gem
 ```
