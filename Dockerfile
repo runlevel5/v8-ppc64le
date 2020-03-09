@@ -2,7 +2,7 @@ FROM ubuntu:bionic
 
 ENV PATH=$PATH:/depot_tools
 ENV VPYTHON_BYPASS="manually managed python not supported by chrome operations"
-ENV V8_VERSION="8.2.270"
+ENV V8_VERSION="7.3.495"
 
 COPY 0001-support-ninja-ppc64le.patch /tmp/0001-support-ninja-ppc64le.patch
 COPY 0002-modify-the-gn-bin-path.patch /tmp/0002-modify-the-gn-bin-path.patch
