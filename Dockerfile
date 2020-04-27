@@ -1,6 +1,7 @@
 FROM ubuntu:19.10
 
-ENV PATH=$PATH:/depot_tools
+ENV DEPOT_TOOLS_PATH=/depot_tools
+ENV PATH=$PATH:$DEPOT_TOOLS_PATH
 ENV VPYTHON_BYPASS="manually managed python not supported by chrome operations"
 ENV V8_VERSION="7.3.495"
 ENV GN_BIN_PATH="/usr/bin"
@@ -15,19 +16,19 @@ update-alternatives --install /usr/bin/gcc gcc /usr/bin/clang-9 3 && \
 update-alternatives --install /usr/bin/python python /usr/bin/python3.8 4 && \
 
 echo "Fetch depot_tools" && \
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /depot_tools && \
-export PATH="$(pwd)/depot_tools/:$PATH" && \
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git $DEPOT_TOOLS_PATH && \
+export PATH="$PATH:$DEPOT_TOOLS_PATH" && \
 
 echo "[CIPD] Missing https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/cpython3/linux-ppc64le" && \
 echo "[CPID] Fallback to host Python 3.8" && \  
-mkdir -p /depot_tools/bootstrap-3.8.0.chromium.8_bin/python3/bin/ && \
-ln -sf /usr/bin/python3 /depot_tools/bootstrap-3.8.0.chromium.8_bin/python3/bin/python3 && \
+mkdir -p $DEPOT_TOOLS_PATH/bootstrap-3.8.0.chromium.8_bin/python3/bin/ && \
+ln -sf /usr/bin/python3 $DEPOT_TOOLS_PATH/bootstrap-3.8.0.chromium.8_bin/python3/bin/python3 && \
 
 echo "depot_tools does not offer ninja binary for ppc64le" && \
 echo "Fall back to manually-built ninja" && \
-cd /tmp && git clone https://github.com/ninja-build/ninja.git -b v1.8.2 && cd ninja && python3 ./configure.py --bootstrap && mv ./ninja /depot_tools/ninja-linux-ppc64le && \
+cd /tmp && git clone https://github.com/ninja-build/ninja.git -b v1.8.2 && cd ninja && python3 ./configure.py --bootstrap && mv ./ninja $DEPOT_TOOLS_PATH/ninja-linux-ppc64le && \
 # Amend depot_tools/ninja to pick up correct binary for ppc64le
-cd /depot_tools && sed -i '/^      \*)/i \ \ \ \ \ \ ppc64le)' ninja && sed '/^      ppc64le)/a \ \ \ \ \ \ \ \ exec "${THIS_DIR}/ninja-linux-ppc64le" "$@";;' ninja
+cd $DEPOT_TOOLS_PATH && sed -i '/^      \*)/i \ \ \ \ \ \ ppc64le)' ninja && sed '/^      ppc64le)/a \ \ \ \ \ \ \ \ exec "${THIS_DIR}/ninja-linux-ppc64le" "$@";;' ninja
 
 echo "[CIPD] Missing https://chrome-infra-packages.appspot.com/p/gn/gn/linux-ppc64le" && \
 echo "[CIPD] Fallback to manually-built gn" && \
@@ -36,7 +37,7 @@ cd / && git clone https://gn.googlesource.com/gn && cd gn && python3 build/gen.p
 echo "Fetch & build V8"
 cd /tmp && fetch v8 && \
 cd /tmp/v8 && git fetch origin && git checkout $V8_VERSION && gclient sync && \
-cd /depot_tools && patch -p1 < /tmp/0002-modify-the-gn-bin-path.patch && \
+cd $DEPOT_TOOLS_PATH && patch -p1 < /tmp/0002-modify-the-gn-bin-path.patch && \
 cd /tmp/v8 && \
 gn gen out.gn/libv8 --args='clang_use_chrome_plugins=false linux_use_bundled_binutils=false use_custom_libcxx=false use_sysroot=false is_debug=false symbol_level=0 is_component_build=false v8_monolithic=true v8_use_external_startup_data=false target_cpu="ppc64" v8_target_cpu="ppc64" treat_warnings_as_errors=false' && \
 ninja -v -C out.gn/libv8 v8_monolith
