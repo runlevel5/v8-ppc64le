@@ -28,7 +28,7 @@ echo "depot_tools does not offer ninja binary for ppc64le" && \
 echo "Fall back to manually-built ninja" && \
 cd /tmp && git clone https://github.com/ninja-build/ninja.git -b v1.8.2 && cd ninja && python3 ./configure.py --bootstrap && mv ./ninja $DEPOT_TOOLS_PATH/ninja-linux-ppc64le && \
 # Amend depot_tools/ninja to pick up correct binary for ppc64le
-cd $DEPOT_TOOLS_PATH && sed -i '/^      \*)/i \ \ \ \ \ \ ppc64le)' ninja && sed '/^      ppc64le)/a \ \ \ \ \ \ \ \ exec "${THIS_DIR}/ninja-linux-ppc64le" "$@";;' ninja
+cd $DEPOT_TOOLS_PATH && sed -i '/^      \*)/i \ \ \ \ \ \ ppc64le)' ninja && sed -i '/^      ppc64le)/a \ \ \ \ \ \ \ \ exec "${THIS_DIR}/ninja-linux-ppc64le" "$@";;' ninja
 
 echo "[CIPD] Missing https://chrome-infra-packages.appspot.com/p/gn/gn/linux-ppc64le" && \
 echo "[CIPD] Fallback to manually-built gn" && \
