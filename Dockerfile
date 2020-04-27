@@ -10,8 +10,9 @@ COPY 0002-modify-the-gn-bin-path.patch /tmp/0002-modify-the-gn-bin-path.patch
 
 RUN apt-get update && apt-get install --no-install-recommends -y pkg-config libglib2.0-dev clang-tools-9 vim libc6-dev make dpkg-dev python3.8 git curl software-properties-common && \
 update-alternatives --install /usr/bin/g++ c++ /usr/bin/clang++-9 1 && \
-update-alternatives --install /usr/bin/gcc gcc /usr/bin/clang-9 2 && \
-ln /usr/bin/clang++-9 /usr/bin/clang++ && \
+update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-9 2 && \
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/clang-9 3 && \
+update-alternatives --install /usr/bin/python python /usr/bin/python3.8 4 && \
 
 echo "Fetch depot_tools" && \
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /depot_tools && \
