@@ -36,7 +36,7 @@ cd /tmp && git clone https://gn.googlesource.com/gn && cd gn && python3 build/ge
 
 echo "Fetch & build V8"
 cd /tmp && fetch v8 && \
-cd /tmp/v8 && git fetch origin && git checkout $V8_VERSION && gclient sync && \
+cd /tmp/v8 && git fetch origin && git checkout $V8_VERSION && gclient sync -D && \
 cd $DEPOT_TOOLS_PATH && patch -p1 < /tmp/0002-modify-the-gn-bin-path.patch && \
 cd /tmp/v8 && \
 gn gen out.gn/libv8 --args='clang_use_chrome_plugins=false linux_use_bundled_binutils=false use_custom_libcxx=false use_sysroot=false is_debug=false symbol_level=0 is_component_build=false v8_monolithic=true v8_use_external_startup_data=false target_cpu="ppc64" v8_target_cpu="ppc64" treat_warnings_as_errors=false' && \
