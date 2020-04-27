@@ -32,7 +32,7 @@ cd $DEPOT_TOOLS_PATH && sed -i '/^      \*)/i \ \ \ \ \ \ ppc64le)' ninja && sed
 
 echo "[CIPD] Missing https://chrome-infra-packages.appspot.com/p/gn/gn/linux-ppc64le" && \
 echo "[CIPD] Fallback to manually-built gn" && \
-cd / && git clone https://gn.googlesource.com/gn && cd gn && python3 build/gen.py && ninja -C out && cp -f out/gn $GN_BIN_PATH && \
+cd /tmp && git clone https://gn.googlesource.com/gn && cd gn && python3 build/gen.py && ninja -C out && cp -f out/gn $GN_BIN_PATH && \
 
 echo "Fetch & build V8"
 cd /tmp && fetch v8 && \
