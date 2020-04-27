@@ -22,7 +22,7 @@ export PATH="$PATH:$DEPOT_TOOLS_PATH" && \
 echo "[CIPD] Missing https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/cpython3/linux-ppc64le" && \
 echo "[CPID] Fallback to host Python 3.8" && \  
 mkdir -p $DEPOT_TOOLS_PATH/bootstrap-3.8.0.chromium.8_bin/python3/bin/ && \
-ln -sf /usr/bin/python3 $DEPOT_TOOLS_PATH/bootstrap-3.8.0.chromium.8_bin/python3/bin/python3 && \
+ln -sf /usr/bin/python3.8 $DEPOT_TOOLS_PATH/bootstrap-3.8.0.chromium.8_bin/python3/bin/python3 && \
 
 echo "depot_tools does not offer ninja binary for ppc64le" && \
 echo "Fall back to manually-built ninja" && \
