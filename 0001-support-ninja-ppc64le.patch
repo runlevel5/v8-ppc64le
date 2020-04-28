@@ -16,7 +16,7 @@ index 1a650b54..eb146a4b 100755
          # on x86_64 kernel)
          exec "${THIS_DIR}/ninja-linux${LONG_BIT}" "$@";;
 +      ppc64le)
-+	exec "${THIS_DIR}/ninja-linux-ppc64le" "$@";;
++	 exec "${THIS_DIR}/ninja-linux-ppc64le" "$@";;
        *)
          echo Unknown architecture \($MACHINE\) -- unable to run ninja.
          print_help
